@@ -27,24 +27,19 @@ int getRandomRange() {
 }
 
 void printFazit(int range, int smaller, int larger) {
-    /* You have to add 1 to both, because they tell the number of attempts needed so that there is only 1 possibilty >left<.
-     * so you have to make the "final" attempt
-     */
-    ++smaller;
-    ++larger;
 
     std::cout << "\nFazit:\n";
     if (larger > smaller) {
         std::cout << "\tBei einer Bereichsgröße von " << range <<
                   " braucht man mit der Methode 'Mittig halbieren' \n\t"
                   "im schlechtesten Fall zwischen " << smaller << " und " << larger <<
-                  " Versuchen um garantiert zu gewinnen.";
+                  " Nachfragen um garantiert zu gewinnen.";
     }
     if (larger == smaller) {
         std::cout << "\tBei einer Bereichsgröße von " << range <<
                   " braucht man mit der Methode 'Mittig halbieren' \n\t"
                   "im schlechtesten Fall " << larger <<
-                  " Versuche um garantiert zu gewinnen.";
+                  " Nachfragen um garantiert zu gewinnen.";
     }
     if (smaller > larger) {
         std::cout << "Fehler in 'printFazit()'! 'smaller' ist größer als 'larger'!";
@@ -72,11 +67,12 @@ int main() {
         }
 
         if (largerRange <= 1) {
-            std::cout << "Nach dem " << guessCount << ". Versuch bleibt nur noch " << largerRange << " Möglichkeit.\n";
+            std::cout << "Nach der " << guessCount << ". Nachfrage bleibt nur noch " << largerRange
+                      << " Möglichkeit.\n";
             break;
         }
 
-        std::cout << "Nach dem " << guessCount << ". Versuch bleiben maximal noch " << largerRange
+        std::cout << "Nach der " << guessCount << ". Nachfrage bleiben maximal noch " << largerRange
                   << " Möglichkeiten.\n";
 
 
@@ -92,11 +88,12 @@ int main() {
         ++guessCount;
 
         if (smallerRange <= 1) {
-            std::cout << "Nach dem " << guessCount << ". Versuch bleibt nur noch " << smallerRange << " Möglichkeit.\n";
+            std::cout << "Nach der " << guessCount << ". Nachfrage bleibt nur noch " << smallerRange
+                      << " Möglichkeit.\n";
             break;
         }
 
-        std::cout << "Nach dem " << guessCount << ". Versuch bleiben im \"besseren\" Fall noch " << smallerRange
+        std::cout << "Nach der " << guessCount << ". Nachfrage bleiben im \"besseren\" Fall noch " << smallerRange
                   << " Möglichkeiten.\n";
 
 
