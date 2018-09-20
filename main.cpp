@@ -27,31 +27,77 @@ int getRandomRange() {
     return (max - min + 1);
 }
 
+void printFazit(int range, int smaller, int larger) {
+    std::cout << "\nFazit:\n";
+    if (larger > smaller) {
+        std::cout << "\tBei einer Bereichsgröße von " << range <<
+                  " braucht man mit der Methode 'Mittig halbieren' \n\t"
+                  "im schlechtesten Fall zwischen " << smaller << " und " << larger <<
+                  " Versuchen um garantiert zu gewinnen.";
+    }
+    if (larger == smaller) {
+        std::cout << "\tBei einer Bereichsgröße von " << range <<
+                  " braucht man mit der Methode 'Mittig halbieren' \n\t"
+                  "im schlechtesten Fall " << larger <<
+                  " Versuche um garantiert zu gewinnen.";
+    }
+    if (smaller > larger) {
+        std::cout << "Fehler in 'printFazit()'! 'smaller' ist größer als 'larger'!";
+    }
+
+}
 
 int main() {
 
     int range = getRandomRange();
+    int largerRange{range};
+    int smallerRange{range};
     int guessCount{0};
+    std::cout << "\n";
 
     do {
-        if (range % 2 == 1) {
+        if (largerRange % 2 == 1) {
 
             //caused by the integer division this line returns the larger of the 2 parts
-            range = range - (range / 2);
+            largerRange = largerRange - (largerRange / 2);
             ++guessCount;
         } else {
-            range /= 2;
+            largerRange /= 2;
             ++guessCount;
         }
 
-        if (range <= 1) {
-            std::cout << "Nach dem " << guessCount << ". Versuch bleibt nur noch " << range << " Möglichkeit.\n";
+        if (largerRange <= 1) {
+            std::cout << "Nach dem " << guessCount << ". Versuch bleibt nur noch " << largerRange << " Möglichkeit.\n";
             break;
         }
 
-        std::cout << "Nach dem " << guessCount << ". Versuch bleiben maximal noch " << range << " Möglichkeiten.\n";
+        std::cout << "Nach dem " << guessCount << ". Versuch bleiben maximal noch " << largerRange
+                  << " Möglichkeiten.\n";
 
 
-    } while (range >= 1);
+    } while (largerRange >= 1);
+
+    int largerGuessCount = guessCount;
+    guessCount = 0;
+
+    std::cout << "\nEine Wiederholung des Durchlaufs mit der Annahme, dass bei ungerader Bereichsgröße "
+                 "immer der kleinere Bereich die zu erratende Zahl enthält:\n\n";
+    do {
+        smallerRange /= 2;
+        ++guessCount;
+
+        if (smallerRange <= 1) {
+            std::cout << "Nach dem " << guessCount << ". Versuch bleibt nur noch " << smallerRange << " Möglichkeit.\n";
+            break;
+        }
+
+        std::cout << "Nach dem " << guessCount << ". Versuch bleiben im \"besseren\" Fall noch " << smallerRange
+                  << " Möglichkeiten.\n";
+
+
+    } while (smallerRange >= 1);
+
+    printFazit(range, guessCount, largerGuessCount);
+
     return 0;
 }
