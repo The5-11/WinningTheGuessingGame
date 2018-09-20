@@ -8,10 +8,9 @@
  * (such the one at https://www.learncpp.com/cpp-tutorial/5-x-chapter-5-comprehensive-quiz/ )
  * based on the guessing times and the number range.
  *
- * The idea is to check if it's possible to win the game every time when guessing times
- * is high in relation to the number range.
+ * The idea is to check how many guesses are maximum needed to win the game.
  *
- * Used Method is simple: enter the medean number in between the range and check, if it is higher or lower and so on
+ * Used Method is simple: Enter the median number of the range and check, if the guessing Number is higher or lower
  */
 
 // should alreday work...
@@ -28,6 +27,12 @@ int getRandomRange() {
 }
 
 void printFazit(int range, int smaller, int larger) {
+    /* You have to add 1 to both, because they tell the number of attempts needed so that there is only 1 possibilty >left<.
+     * so you have to make the "final" attempt
+     */
+    ++smaller;
+    ++larger;
+
     std::cout << "\nFazit:\n";
     if (larger > smaller) {
         std::cout << "\tBei einer Bereichsgröße von " << range <<
