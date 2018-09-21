@@ -23,9 +23,9 @@ int getRandomRange() {
     std::cin >> max;
     int startrange = max - min + 1;
     if (startrange > 1) {
-        std::cout << "Es gibt also " << startrange << " Möglichkeiten.\n";
+        std::cout << "Es gibt also " << startrange << " Möglichkeiten.\n\n";
     } else if (startrange == 1) {
-        std::cout << "Es gibt also nur " << startrange << " Möglichkeit.\n";
+        std::cout << "Es gibt also nur " << startrange << " Möglichkeit.\n\n";
     } else {
         std::cout << "FEHLER in 'getRandomRange()'. Die Bereichsgrenzen wurden vertauscht.\n"
                      "Die Ausführung wird mit getauschten Bereichsgrenzen fortgesetzt.\n\n";
@@ -36,71 +36,54 @@ int getRandomRange() {
 }
 
 
-void printFazit(int range, int smaller, int larger) {
-
+void printFazit(int startrange, int guessCount) {
     std::cout << "\nFazit:\n";
-    if (larger > smaller) {
-        std::cout << "\tBei einer Bereichsgröße von " << range << " braucht man mit der Methode 'Mittig halbieren' \n\t"
-                                                                  "maximal (falls die gesuchte Zahl nicht schon früher direkt erraten wird)\n\t"
-                                                                  "(zwischen " << smaller << " und) " << larger
-                  << " Nachfragen um garantiert zu gewinnen.";
-    }
-    if (larger == smaller) {
-        std::cout << "\tBei einer Bereichsgröße von " << range <<
-                  " braucht man mit der Methode 'Mittig halbieren' \n\t"
-                  "maximal (falls die gesuchte Zahl nicht schon früher direkt erraten wird)\n\t" <<
-                  larger << " Nachfragen um garantiert zu gewinnen.";
-    }
-    if (smaller > larger) {
-        std::cout << "FEHLER in 'printFazit()'. 'smaller' > 'larger'!";
-    }
-
+    std::cout << "\tBei einer Bereichsgröße von " << startrange <<
+              " braucht man mit der Methode 'Mittig halbieren' \n\t"
+              "maximal (falls die gesuchte Zahl nicht schon früher direkt erraten wird)\n\t" <<
+              guessCount << " Nachfragen um garantiert zu gewinnen.\n";
 }
 
 
 int main() {
 
-    int range = getRandomRange();
+    int startrange = getRandomRange();
 
-    if (range == 1) {
-        std::cout << "Somit errät man die gesuchte Zahl beim 1. Mal.";
+    //short quit, if range is only 1
+    if (startrange == 1) {
+        std::cout << "Somit errät man die gesuchte Zahl beim 1. Mal.\n";
         return 0;
     }
 
+    int range{startrange};
     int guessCount{0};
-    std::cout << "\n";
-
-
-    int largerRange{range};
     do {
-        //the integer division fits for both (range is even/uneven) cases, because the median number is not included in the new range!
-        if (largerRange > 1) {
-            largerRange /= 2;
+        //the integer division fits for both (range is even/uneven) cases, because the median number is >not< included in the new range!
+        if (range > 1) {
+            range /= 2;
             ++guessCount;
         }
 
-        if (largerRange <= 1) {
+        if (range <= 1) {
             if (guessCount > 0) {
-                std::cout << "Nach der " << guessCount << ". Nachfrage bleibt maximal noch " << largerRange
+                std::cout << "Nach der " << guessCount << ". Nachfrage bleibt maximal noch " << range
                           << " Möglichkeit.\n";
             }
 
             std::cout << "Somit errät man die gesuchte Zahl spätestens beim " << ++guessCount << ". Mal.\n";
             break;
         }
-        std::cout << "Nach der " << guessCount << ". Nachfrage bleiben maximal noch " << largerRange
+        std::cout << "Nach der " << guessCount << ". Nachfrage bleiben maximal noch " << range
                   << " Möglichkeiten.\n";
-    } while (largerRange >= 1);
+    } while (range >= 1);
 
-    int largerGuessCount = guessCount;
-    //guessCount = 0;
-
-
-
-    printFazit(range, guessCount, largerGuessCount);
+    printFazit(startrange, guessCount);
 
     return 0;
 }
+
+
+
 
 /*std::cout << "\nEine Wiederholung des Durchlaufs mit der Annahme, dass bei einer Nachfrage\n"
                  "die gesuchte Zahl immer in dem (wenn möglich) kleineren Bereich ist,\n"
