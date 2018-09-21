@@ -27,7 +27,7 @@ int getRandomRange() {
     } else if (startrange == 1) {
         std::cout << "Es gibt also nur " << startrange << " Möglichkeit.\n";
     } else {
-        std::cout << "FEHLER in 'getRandomRange()'. Wahrscheinlich wurden die Bereichsgrenzen vertauscht.\n"
+        std::cout << "FEHLER in 'getRandomRange()'. Die Bereichsgrenzen wurden vertauscht.\n"
                      "Die Ausführung wird mit getauschten Bereichsgrenzen fortgesetzt.\n\n";
         return (min - max + 1);
     }
