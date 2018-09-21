@@ -28,7 +28,7 @@ int getRandomRange() {
         std::cout << "Es gibt also nur " << startrange << " Möglichkeit.\n";
     } else {
         std::cout << "FEHLER in 'getRandomRange()'. Wahrscheinlich wurden die Bereichsgrenzen vertauscht.\n"
-                     "Die Ausführung wird mit getauschten Bereichsgrenzen fortgesetzt.";
+                     "Die Ausführung wird mit getauschten Bereichsgrenzen fortgesetzt.\n\n";
         return (min - max + 1);
     }
 
@@ -93,9 +93,16 @@ int main() {
     } while (largerRange >= 1);
 
     int largerGuessCount = guessCount;
-    guessCount = 0;
+    //guessCount = 0;
 
-    std::cout << "\nEine Wiederholung des Durchlaufs mit der Annahme, dass bei einer Nachfrage\n"
+
+
+    printFazit(range, guessCount, largerGuessCount);
+
+    return 0;
+}
+
+/*std::cout << "\nEine Wiederholung des Durchlaufs mit der Annahme, dass bei einer Nachfrage\n"
                  "die gesuchte Zahl immer in dem (wenn möglich) kleineren Bereich ist,\n"
                  "die Zahl aber nicht bereits \"unterwegs\" erraten wird:\n\n";
 
@@ -119,9 +126,4 @@ int main() {
                   << " Möglichkeiten.\n";
 
 
-    } while (smallerRange >= 1);
-
-    printFazit(range, guessCount, largerGuessCount);
-
-    return 0;
-}
+    } while (smallerRange >= 1);*/
