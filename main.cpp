@@ -1,5 +1,7 @@
 #include <iostream>
 
+using guessrange_t = long long; //just change this data type to change all of guessrange_t
+
 /* by Simon Blankenburg
  * started at 09/19/2018
  * finished at --/09/2018
@@ -14,29 +16,51 @@
  */
 
 // This should work fine...
-int getRandomRange() {
-    std::cout << "Die erzeugten Zufallszahlen beim Ratespiel liegen im Bereich von (inklusive): \n";
-    int min;
-    std::cin >> min;
-    std::cout << "...bis (inklusive): \n";
-    int max;
-    std::cin >> max;
-    int startrange = max - min + 1;
-    if (startrange > 1) {
-        std::cout << "Es gibt also " << startrange << " Möglichkeiten.\n\n";
-    } else if (startrange == 1) {
-        std::cout << "Es gibt also nur " << startrange << " Möglichkeit.\n\n";
-    } else {
-        std::cout << "FEHLER in 'getRandomRange()'. Die Bereichsgrenzen wurden vertauscht.\n"
-                     "Die Ausführung wird mit getauschten Bereichsgrenzen fortgesetzt.\n\n";
-        return (min - max + 1);
-    }
+guessrange_t getRandomRange() {
+
+    bool noGoodValuesAvailable{true};
+    guessrange_t startrange{0};
+    do {
+        std::cout << "Die erzeugten Zufallszahlen beim Ratespiel liegen im Bereich von (inklusive): \n";
+
+        guessrange_t min;
+        std::cin >> min;
+
+        std::cout << "...bis (inklusive): \n";
+
+        guessrange_t max;
+        std::cin >> max;
+
+        if (std::cin.fail()) {
+            std::cout << "Fehlerhafte Eingabe.\n\n";
+            std::cin.clear(); //back in 'normal' operation mode
+            std::cin.ignore(32767, '\n'); //remove bad input
+            noGoodValuesAvailable = true;
+            continue;
+        }
+
+        startrange = max - min + 1;
+
+        if (startrange > 1) {
+            std::cout << "Es gibt also " << startrange << " Möglichkeiten.\n\n";
+            noGoodValuesAvailable = false;
+        } else if (startrange == 1) {
+            std::cout << "Es gibt also nur " << startrange << " Möglichkeit.\n\n";
+            noGoodValuesAvailable = false;
+        } else {
+            std::cout << "FEHLER in 'getRandomRange()'. Wahrscheinlich wurden die Bereichsgrenzen vertauscht\n"
+                         "oder die eingegebenen Zahlen sind zu groß. \nBitte erneut eingeben.\n\n";
+            noGoodValuesAvailable = true;
+
+        }
+    } while (noGoodValuesAvailable);
+
 
     return (startrange);
 }
 
 
-void printFazit(int startrange, int guessCount) {
+void printFazit(guessrange_t startrange, guessrange_t guessCount) {
     std::cout << "\nFazit:\n";
     std::cout << "\tBei einer Bereichsgröße von " << startrange <<
               " braucht man mit der Methode 'Mittig halbieren' \n\t"
@@ -47,7 +71,7 @@ void printFazit(int startrange, int guessCount) {
 
 int main() {
 
-    int startrange = getRandomRange();
+    guessrange_t startrange = getRandomRange();
 
     //short quit, if range is only 1
     if (startrange == 1) {
@@ -55,8 +79,8 @@ int main() {
         return 0;
     }
 
-    int range{startrange};
-    int guessCount{0};
+    guessrange_t range{startrange};
+    guessrange_t guessCount{0};
     do {
         //the integer division fits for both (range is even/uneven) cases, because the median number is >not< included in the new range!
         if (range > 1) {
