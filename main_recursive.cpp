@@ -44,10 +44,12 @@ int getRandomRange() {
         startrange = max - min + 1;
 
         if (startrange > 1) {
-            std::cout << "Es gibt also " << startrange << " Möglichkeiten.\n\n";
+            std::cout << "Es gibt also " << startrange << " Möglichkeiten.\n"
+                                                          "(Die Wahrscheinlichkeit, die gesuchte Zahl bei der 1. Nachfrage direkt zu erraten beträgt "
+                      << (100.0 / startrange) << "%.)\n\n";
             noGoodValuesAvailable = false;
         } else if (startrange == 1) {
-            std::cout << "Es gibt also nur " << startrange << " Möglichkeit.\n\n";
+            std::cout << "Es gibt nur " << startrange << " Möglichkeit.\n\n";
             noGoodValuesAvailable = false;
         } else {
             std::cout << "FEHLER in 'getRandomRange()'. Wahrscheinlich wurden die Bereichsgrenzen vertauscht\n"
@@ -80,7 +82,10 @@ void doItRecursive(int range, int tempGuessCount) {
         doItRecursive(range / 2, ++tempGuessCount);
     } else {
         std::cout << "Nach der " << tempGuessCount << ". Nachfrage bleiben maximal noch " << range
-                  << " Möglichkeiten.\n";
+                  << " Möglichkeiten.\n"
+                     "(Die Wahrscheinlichkeit, die gesuchte Zahl bei der " << (tempGuessCount + 1)
+                  << ". Nachfrage direkt zu erraten beträgt " << (100.0 / range) << "%.)\n\n";
+
         doItRecursive(range / 2, ++tempGuessCount);
         ++guessCount; //not perfect, but I didn't know how to use tempGuessCount also in the main function
     }
