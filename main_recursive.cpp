@@ -2,18 +2,15 @@
 
 /* by Simon Blankenburg
  * started at 09/19/2018
- * finished at --/09/2018
+ * finished at 09/24/2018
  *
- * This program evaluates the chance to win a hi-lo guessing game
+ * The initial idea is to check how many guesses are maximum needed to win the game.
+ * This program additionally evaluates the chance to win a hi-lo guessing game
  * (such the one at https://www.learncpp.com/cpp-tutorial/5-x-chapter-5-comprehensive-quiz/ )
  * based on the guessing times and the number range.
  *
- * The idea is to check how many guesses are maximum needed to win the game.
- *
- * Used Method is simple: Enter the median number of the range and check, if the guessing Number is higher or lower
+ * Used Method is simple: Enter the median number of the range and check, if the Number to be guessed is higher or lower
  */
-
-int guessCount{0}; //see below
 
 int getRandomRange() {
 
@@ -21,7 +18,7 @@ int getRandomRange() {
     int startrange{0};
     do {
         std::cout
-                << "[Rekursive Variante]\n\nDie erzeugten Zufallszahlen beim Ratespiel liegen im Bereich von (inklusive): \n";
+            << "Die erzeugten Zufallszahlen beim Ratespiel liegen im Bereich von (inklusive): \n";
 
         int min;
         std::cin >> min;
@@ -72,36 +69,33 @@ void printConclusion(int startrange, int guessCount) {
               guessCount << " Nachfrage(n) um garantiert zu gewinnen.\n";
 }
 
-//I have to think about a better function name
-void doItRecursive(int range, int tempGuessCount) {
+int doItRecursive(int range, int tempGuessCount) {
     if (range < 0) {
         std::cout << "range ist kleiner als 0.\n";
     } else if (range == 0) {
         std::cout << "Somit errät man die gesuchte Zahl (spätestens) beim " << tempGuessCount << ". Mal.\n";
+        return tempGuessCount;
     } else if (tempGuessCount == 0) {
-        doItRecursive(range / 2, ++tempGuessCount);
+        return doItRecursive(range / 2, ++tempGuessCount);
     } else {
         std::cout << "Nach der " << tempGuessCount << ". Nachfrage bleiben maximal noch " << range
-                  << " Möglichkeiten.\n"
+                  << " Möglichkeit(en).\n"
                      "(Die Wahrscheinlichkeit, die gesuchte Zahl bei der " << (tempGuessCount + 1)
                   << ". Nachfrage direkt zu erraten beträgt " << (100.0 / range) << "%.)\n\n";
 
-        doItRecursive(range / 2, ++tempGuessCount);
-        ++guessCount; //not perfect, but I didn't know how to use tempGuessCount also in the main function
+        return doItRecursive(range / 2, ++tempGuessCount);
     }
+    return 0; //should never be reached
 }
 
 
 int main() {
 
+    std::cout << "[Rekursive Variante]\n\n";
     int startrange = getRandomRange();
-
     int range{startrange};
-    int tempGuessCount{0};
 
-    doItRecursive(range, tempGuessCount);
-
-    printConclusion(startrange, ++guessCount);
+    printConclusion(startrange, doItRecursive(range, 0));
 
     return 0;
 }
