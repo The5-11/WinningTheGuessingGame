@@ -67,7 +67,7 @@ void printConclusion(int startrange, int guessCount) {
     std::cout << "\tBei einer Bereichsgröße von " << startrange <<
               " braucht man mit der Methode 'Mittig halbieren' \n\t"
               "maximal (falls die gesuchte Zahl nicht schon früher direkt erraten wird)\n\t" <<
-              guessCount << " Nachfragen um garantiert zu gewinnen.\n";
+              guessCount << " Nachfrage(n) um garantiert zu gewinnen.\n";
 }
 
 //I have to think about a better function name
