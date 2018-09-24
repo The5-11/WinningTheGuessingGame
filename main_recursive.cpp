@@ -1,5 +1,18 @@
 #include <iostream>
 
+/* by Simon Blankenburg
+ * started at 09/19/2018
+ * finished at --/09/2018
+ *
+ * This program evaluates the chance to win a hi-lo guessing game
+ * (such the one at https://www.learncpp.com/cpp-tutorial/5-x-chapter-5-comprehensive-quiz/ )
+ * based on the guessing times and the number range.
+ *
+ * The idea is to check how many guesses are maximum needed to win the game.
+ *
+ * Used Method is simple: Enter the median number of the range and check, if the guessing Number is higher or lower
+ */
+
 int guessCount{0}; //see below
 
 int getRandomRange() {
@@ -7,7 +20,8 @@ int getRandomRange() {
     bool noGoodValuesAvailable{true};
     int startrange{0};
     do {
-        std::cout << "Die erzeugten Zufallszahlen beim Ratespiel liegen im Bereich von (inklusive): \n";
+        std::cout
+                << "[Rekursive Variante]\n\nDie erzeugten Zufallszahlen beim Ratespiel liegen im Bereich von (inklusive): \n";
 
         int min;
         std::cin >> min;

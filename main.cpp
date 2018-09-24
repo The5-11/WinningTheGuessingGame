@@ -16,12 +16,13 @@ using guessrange_t = long long; //just change this data type to change all of gu
  */
 
 // This should work fine...
-guessrange_t getRandomRange() {
+guessrange_t getRandRange() {
 
     bool noGoodValuesAvailable{true};
     guessrange_t startrange{0};
     do {
-        std::cout << "Die erzeugten Zufallszahlen beim Ratespiel liegen im Bereich von (inklusive): \n";
+        std::cout
+                << "[Iterative Variante]\n\nDie erzeugten Zufallszahlen beim Ratespiel liegen im Bereich von (inklusive): \n";
 
         guessrange_t min;
         std::cin >> min;
@@ -69,9 +70,9 @@ void printFazit(guessrange_t startrange, guessrange_t guessCount) {
 }
 
 
-int main() {
+int main2() {
 
-    guessrange_t startrange = getRandomRange();
+    guessrange_t startrange = getRandRange();
 
     //short quit, if range is only 1
     if (startrange == 1) {
